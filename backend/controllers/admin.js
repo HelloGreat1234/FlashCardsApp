@@ -13,8 +13,6 @@ const Addcards = (req, res) => {
         if (err) {
             return res.status(500).json({ error: err.message });
         }
-
-        // Use the inserted ID to get the newly added flashcard
         const newFlashcardId = results.insertId;
         const selectQuery = 'SELECT * FROM flashcards WHERE id = ?';
 
@@ -23,7 +21,6 @@ const Addcards = (req, res) => {
                 return res.status(500).json({ error: err.message });
             }
 
-            // Send the newly added flashcard as response
             res.status(201).json({ message: 'Flashcard created', flashcard: results[0] });
         });
     });
@@ -61,19 +58,16 @@ const Updatecards = (req, res) => {
             return res.status(500).json({ error: err.message });
         }
 
-        // Check if any row was affected
         if (results.affectedRows === 0) {
             return res.status(404).json({ error: 'Flashcard not found' });
         }
 
-        // Fetch the updated flashcard
         const selectQuery = 'SELECT * FROM flashcards WHERE id = ?';
         connection.query(selectQuery, [id], (err, rows) => {
             if (err) {
                 return res.status(500).json({ error: err.message });
             }
 
-            // Assuming there is only one row returned
             const updatedFlashcard = rows[0];
 
             res.status(200).json({ message: 'Flashcard updated', flashcard: updatedFlashcard });

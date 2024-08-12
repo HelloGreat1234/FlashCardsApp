@@ -4,21 +4,32 @@ import { IoArrowBackCircle } from "react-icons/io5";
 
 const FlashCardList = ({ id, back }) => {
     const [currCard, setCurrCard] = useState(0);
-    const [list, SetList] = useState([]);
+    const [list, setList] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const call = async () => {
-            const res = await fetch(`https://flashcardstakeyouforwar.onrender.com/api/admin/flashcards/${id}`, {
-                method: "GET",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                  }
-            });
+            try {
+                const res = await fetch(`https://flashcardstakeyouforwar.onrender.com/api/admin/flashcards/${id}`, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                });
 
-            const data = await res.json();
-            SetList(data);
-            console.log(data);
+                if (!res.ok) {
+                    throw new Error(`Error: ${res.statusText}`);
+                }
+
+                const data = await res.json();
+                setList(data);
+                setLoading(false);
+            } catch (err) {
+                setError(err.message);
+                setLoading(false);
+            }
         };
 
         call();
@@ -38,39 +49,45 @@ const FlashCardList = ({ id, back }) => {
 
     return (
         <div className="flex justify-center items-center h-screen bg-gray-900">
-            <div className="border-2 border-gray-800 h-[500px] w-[75vw] rounded-lg bg-gradient-to-r from-gray-900 via-black to-gray-900 shadow-xl p-6 space-y-6">
-                <button className="absolute"
-                onClick={()=>{back(false)}}
-                >
-                    <IoArrowBackCircle size={50} color="#2196F3"/>
+            <div className="border-2 border-gray-800 h-[500px] w-[75vw] rounded-lg bg-gradient-to-r from-gray-900 via-black to-gray-900 shadow-xl p-6 space-y-6 relative">
+                <button className="absolute top-4 left-4" onClick={() => { back(false) }}>
+                    <IoArrowBackCircle size={50} color="#2196F3" />
                 </button>
                 <p className="text-3xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400">
                     FlashCard Test
                 </p>
 
-                <div className="aspect-[5/3] h-[55vh] flex bg-gray-900 border-2 border-gray-800 rounded-lg overflow-hidden shadow-lg mx-auto">
-                    <div
-                        className={`flex transition-transform duration-500 ease-in-out`}
-                        style={{ transform: `translateX(-${currCard * 300 * (5 / 3)}px)` }}
-                    >
-                        {list.map((ele) => (
-                            <div key={ele.id} className="flex-shrink-0 h-[300px] aspect-[5/3]">
-                                <FlashCard answer ={ele.answer} question = {ele.question} />
-                            </div>
-                        ))}
+                {loading ? (
+                    <p className="text-center text-white">Loading...</p>
+                ) : error ? (
+                    <p className="text-center text-red-500">Error: {error}</p>
+                ) : (
+                    <div className="aspect-[5/3] h-[55vh] flex bg-gray-900 border-2 border-gray-800 rounded-lg overflow-hidden shadow-lg mx-auto">
+                        <div
+                            className="flex transition-transform duration-500 ease-in-out"
+                            style={{ transform: `translateX(-${currCard * 100}%)` }}
+                        >
+                            {list.map((ele, index) => (
+                                <div key={index} className="flex-shrink-0 h-full w-full">
+                                    <FlashCard answer={ele.answer} question={ele.question} />
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
+                )}
 
                 <div className="flex justify-evenly">
                     <button
                         className="bg-gradient-to-r from-blue-500 to-teal-400 px-6 py-3 rounded-md text-lg font-semibold text-white transition-all duration-300 transform hover:scale-105"
                         onClick={prevCard}
+                        disabled={currCard === 0}
                     >
                         Previous
                     </button>
                     <button
                         className="bg-gradient-to-r from-blue-500 to-teal-400 px-6 py-3 rounded-md text-lg font-semibold text-white transition-all duration-300 transform hover:scale-105"
                         onClick={nextCard}
+                        disabled={currCard === list.length - 1}
                     >
                         Next
                     </button>

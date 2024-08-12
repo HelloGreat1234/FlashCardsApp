@@ -31,7 +31,7 @@ const Admin = () => {
 
     const DeleteCard = async (id) => {
         try {
-            const res = await fetch(`${process.env.BACKEND_URL}/api/admin/flashcard/${id}`, {
+            const res = await fetch(`https://flashcardstakeyouforwar.onrender.com/api/admin/flashcard/${id}`, {
                 method: "DELETE"
             });
 
@@ -49,7 +49,7 @@ const Admin = () => {
 
     const addSubject = async () => {
         try {
-            const res = await fetch(`${process.env.BACKEND_URL}/api/admin/subjects`, {
+            const res = await fetch(`https://flashcardstakeyouforwar.onrender.com/api/admin/subjects`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(newSubject),
@@ -71,7 +71,7 @@ const Admin = () => {
 
     useEffect(() => {
         const call = async () => {
-            const res = await fetch(`${process.env.BACKEND_URL}/api/user/subjects`, {
+            const res = await fetch(`https://flashcardstakeyouforwar.onrender.com/api/user/subjects`, {
                 method: "GET"
             });
 

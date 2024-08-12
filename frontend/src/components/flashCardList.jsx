@@ -8,7 +8,7 @@ const FlashCardList = ({ id, back }) => {
 
     useEffect(() => {
         const call = async () => {
-            const res = await fetch(`${process.env.BACKEND_URL}/api/admin/flashcards/${id}`, {
+            const res = await fetch(`https://flashcardstakeyouforwar.onrender.com/api/admin/flashcards/${id}`, {
                 method: "GET"
             });
 

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import FlashCard from "../components/flashCards";
 import FlashcardForm from "../components/FlashCardForm";
 import UpdateFlashcardForm from "../components/FlashUpdateForm";
 import { Link } from "react-router-dom";
@@ -14,7 +13,7 @@ const Admin = () => {
     const [addSubjectForm, setAddSubjectForm] = useState(false);
 
     const callFlashCards = async (subject) => {
-        const res = await fetch(`http://localhost:3000/api/admin/flashcards/${subject}`, {
+        const res = await fetch(`${process.env.BACKEND_URL}/api/admin/flashcards/${subject}`, {
             method: "GET"
         });
 
@@ -32,7 +31,7 @@ const Admin = () => {
 
     const DeleteCard = async (id) => {
         try {
-            const res = await fetch(`http://localhost:3000/api/admin/flashcard/${id}`, {
+            const res = await fetch(`${process.env.BACKEND_URL}/api/admin/flashcard/${id}`, {
                 method: "DELETE"
             });
 
@@ -50,7 +49,7 @@ const Admin = () => {
 
     const addSubject = async () => {
         try {
-            const res = await fetch('http://localhost:3000/api/admin/subjects', {
+            const res = await fetch(`${process.env.BACKEND_URL}/api/admin/subjects`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(newSubject),
@@ -72,7 +71,7 @@ const Admin = () => {
 
     useEffect(() => {
         const call = async () => {
-            const res = await fetch('http://localhost:3000/api/user/subjects', {
+            const res = await fetch(`${process.env.BACKEND_URL}/api/user/subjects`, {
                 method: "GET"
             });
 

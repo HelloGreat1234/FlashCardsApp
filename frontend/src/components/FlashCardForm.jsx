@@ -7,7 +7,7 @@ const FlashcardForm = ({ subject_id, onUpdateFlashcards,SetAddFlashForm }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         SetAddFlashForm(false)
-        const res = await fetch('http://localhost:3000/api/admin/flashcard', {
+        const res = await fetch(`${process.env.BACKEND_URL}/api/admin/flashcard`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ subject_id, question, answer }),

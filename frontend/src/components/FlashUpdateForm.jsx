@@ -8,7 +8,7 @@ const UpdateFlashcardForm = ({ flashcard, onUpdateFlashcards, setShowUpdateForm 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch(`http://localhost:3000/api/admin/flashcard/${flashcard.id}`, {
+            const res = await fetch(`${process.env.BACKEND_URL}/api/admin/flashcard/${flashcard.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",

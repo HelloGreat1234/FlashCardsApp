@@ -13,8 +13,12 @@ const Admin = () => {
     const [addSubjectForm, setAddSubjectForm] = useState(false);
 
     const callFlashCards = async (subject) => {
-        const res = await fetch(`http://localhost:3000/api/admin/flashcards/${subject}`, {
-            method: "GET"
+        const res = await fetch(`https://flashcardstakeyouforwar.onrender.com/api/admin/flashcards/${subject}`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              }
         });
 
         const data = await res.json();
@@ -31,7 +35,7 @@ const Admin = () => {
 
     const DeleteCard = async (id) => {
         try {
-            const res = await fetch(`http://localhost:3000/api/admin/flashcard/${id}`, {
+            const res = await fetch(`https://flashcardstakeyouforwar.onrender.com/api/admin/flashcard/${id}`, {
                 method: "DELETE"
             });
 
@@ -49,7 +53,7 @@ const Admin = () => {
 
     const addSubject = async () => {
         try {
-            const res = await fetch(`http://localhost:3000/api/admin/subjects`, {
+            const res = await fetch(`https://flashcardstakeyouforwar.onrender.com/api/admin/subjects`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(newSubject),
@@ -71,8 +75,12 @@ const Admin = () => {
 
     useEffect(() => {
         const call = async () => {
-            const res = await fetch(`http://localhost:3000/api/user/subjects`, {
-                method: "GET"
+            const res = await fetch(`https://flashcardstakeyouforwar.onrender.com/api/user/subjects`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                  }
             });
 
             const data = await res.json();

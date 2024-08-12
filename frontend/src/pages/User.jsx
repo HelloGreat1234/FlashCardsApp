@@ -22,7 +22,7 @@ const HomePage = () => {
     useEffect(() => {
         const call = async () => {
 
-            const res = await fetch(`https://flashcardstakeyouforwar.onrender.com/api/user/subjects`, {
+            const res = await fetch(` http://localhost:3000/api/user/subjects`, {
                 method: "GET"
             });
 

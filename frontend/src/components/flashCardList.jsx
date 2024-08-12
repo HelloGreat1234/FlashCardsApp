@@ -62,7 +62,7 @@ const FlashCardList = ({ id, back }) => {
                 ) : error ? (
                     <p className="text-center text-red-500">Error: {error}</p>
                 ) : (
-                    <div className="aspect-[5/3] h-[55vh] flex bg-gray-900 border-2 border-gray-800 rounded-lg overflow-hidden shadow-lg mx-auto">
+                    <div className="aspect-[5/3] h-[55vh] flex bg-transparent rounded-lg overflow-hidden shadow-lg mx-auto">
                         <div
                             className="flex transition-transform duration-500 ease-in-out"
                             style={{ transform: `translateX(-${currCard * 100}%)` }}
